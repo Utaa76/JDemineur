@@ -73,6 +73,45 @@ public class Plateau
 		}
 	}
 
+	public void avertir(int lig, int col)
+	{
+		if (lig < 0 || col < 0 || lig > this.taille || col > this.taille) return;
+
+		this.plateau[lig][col].avertir();
+	}
+
+	public boolean retourner(int lig, int col)
+	{
+		if (lig < 0 || col < 0 || lig > this.taille || col > this.taille) return false;
+
+		boolean bRet = this.plateau[lig][col].retourner();
+
+		switch (this.gameOver())
+		{
+			case 1 -> System.out.println("Perdu");
+			case 2 -> System.out.println("Gagné");
+		}
+
+		return bRet;
+	}
+
+	public int gameOver() // A CORRIGER --> LE CAS 2 NE FONCTIONNE PAS
+	{
+		int iRet = 0;
+
+		for (Case[] tabCase : this.plateau)
+		{
+			for (Case c : tabCase)
+			{
+				if      ( c.estRetourne() &&  c.isBombe()) return 1;
+				else if (!c.estRetourne() && !c.isBombe()) iRet = 2; // A REVOIR
+				else                                       iRet = 0;
+			}
+		}
+
+		return iRet;
+	}
+
 	public String toString()
 	{
 		String sRet = "";

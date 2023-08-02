@@ -6,12 +6,14 @@ public class Case
 {
 	private int             val;
 	private boolean         estRetourne;
-	public ArrayList<Case> alVoisins;
+	private boolean         estAverti;
+	private ArrayList<Case> alVoisins;
 
 	public Case()
 	{
 		this.val         = 0;
-		this.estRetourne = true;
+		this.estRetourne = false;
+		this.estAverti   = false;
 		this.alVoisins   = new ArrayList<>();
 	}
 
@@ -20,10 +22,30 @@ public class Case
 		this.alVoisins.add(c);
 	}
 
-	public void retourner()
+	public boolean retourner()
 	{
-		// TO DO : Retourner tous les voisins si tous les voisins sont à 0
+		if (this.estRetourne) return false;
+
 		this.estRetourne = true;
+
+		if (this.val == 0)
+		{
+
+			for (Case c : this.alVoisins)
+				if (c.val == 0) c.retourner();
+		}
+		
+		return true;
+	}
+
+	public void avertir()
+	{
+		if (!this.estRetourne) this.estAverti = !this.estAverti;
+	}
+
+	public boolean estRetourne()
+	{
+		return this.estRetourne;
 	}
 
 	public void calculVal()
@@ -49,7 +71,9 @@ public class Case
 
 	public String toString()
 	{
-		if (!this.estRetourne)
+		if (this.estAverti)
+			return "!";
+		else if (!this.estRetourne)
 			return ".";
 		else if (this.isBombe())
 			return "X";
