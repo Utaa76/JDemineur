@@ -1,20 +1,27 @@
 package jdemineur;
 
 import jdemineur.metier.*;
+import jdemineur.vue.*;
 import iut.algo.Clavier;
 
 public class Controleur 
 {
-	Plateau metier;
+	public static final int TAILLE = 10;
+
+	private Plateau      metier;
+	private FramePlateau vue;
 
 	public Controleur()
 	{
-		this.metier = new Plateau(5);
+		this.metier = new Plateau     (Controleur.TAILLE);
+		this.vue    = new FramePlateau(this);
 
-		char   saisie;
+		/* VERSION CUI */
+		
+		/* char   saisie;
 		String choix = "[A]vertir   une case\n" +
 		               "[R]etourner une case\n" +
-		               "[Qjuitter";
+		               "[Q]uitter";
 
 		System.out.println(this.metier);
 
@@ -47,7 +54,7 @@ public class Controleur
 
 			System.out.println(this.metier);
 
-		} while (saisie != 'Q' || this.metier.gameOver() <= 0); // A REVOIR
+		} while (saisie != 'Q' || this.metier.gameOver() <= 0);*/
 	}
 
 	public boolean retourner(int lig, int col)
@@ -58,6 +65,22 @@ public class Controleur
 	public void avertir(int lig, int col)
 	{
 		this.metier.avertir(lig, col);
+	}
+
+	// VUE
+
+	public String getImage(int lig, int col)
+	{
+		String strCase = this.metier.getCase(lig, col).toString();
+
+		String urlImg = "./img/";
+
+		return strCase.equals(".") ? urlImg + "case.png" : urlImg + strCase + ".png";
+	}
+
+	public boolean gameOver()
+	{
+		return this.metier.gameOver() == 1;
 	}
 
 	public static void main(String[] a)

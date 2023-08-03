@@ -11,7 +11,7 @@ public class Plateau
 		this.plateau = new Case[this.taille][this.taille];
 
 		this.initialiser();
-		this.placerBombes((int)(this.taille * this.taille * 0.10));
+		this.placerBombes((int)(this.taille * this.taille * 0.15));
 		this.setVoisins();
 		this.calculVal();
 	}
@@ -82,15 +82,9 @@ public class Plateau
 
 	public boolean retourner(int lig, int col)
 	{
-		if (lig < 0 || col < 0 || lig > this.taille || col > this.taille) return false;
+		if (lig < 0 || col < 0 || lig > this.taille || col > this.taille || this.gameOver() == 1) return false;
 
 		boolean bRet = this.plateau[lig][col].retourner();
-
-		switch (this.gameOver())
-		{
-			case 1 -> System.out.println("Perdu");
-			case 2 -> System.out.println("Gagné");
-		}
 
 		return bRet;
 	}
@@ -103,13 +97,18 @@ public class Plateau
 		{
 			for (Case c : tabCase)
 			{
-				if      ( c.estRetourne() &&  c.isBombe()) return 1;
-				else if (!c.estRetourne() && !c.isBombe()) iRet = 2; // A REVOIR
-				else                                       iRet = 0;
+				if      ( c.estRetourne() &&  c.isBombe()) return 1; // LOSE
+				else if (!c.estRetourne() && !c.isBombe()) iRet = 2; // WIN          // A REVOIR
+				else                                       iRet = 0; // NOT FINISHED
 			}
 		}
 
 		return iRet;
+	}
+
+	public Case getCase(int lig, int col)
+	{
+		return this.plateau[lig][col];
 	}
 
 	public String toString()

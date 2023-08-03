@@ -30,9 +30,8 @@ public class Case
 
 		if (this.val == 0)
 		{
-
 			for (Case c : this.alVoisins)
-				if (c.val == 0) c.retourner();
+				c.retourner();
 		}
 		
 		return true;

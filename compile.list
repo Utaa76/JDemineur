@@ -1,4 +1,7 @@
 ./metier/Plateau.java
 ./metier/Case.java
 
+./vue/FramePlateau.java
+./vue/PanelPlateau.java
+
 ./Controleur.java
