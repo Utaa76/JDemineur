@@ -3,6 +3,7 @@ package jdemineur.vue;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -14,9 +15,11 @@ import jdemineur.Controleur;
 public class PanelPlateau extends JPanel
 {
 	private Controleur ctrl;
+	private Integer[]  posCase;
 
 	public PanelPlateau(Controleur ctrl)
 	{
+		this.posCase =  null;
 		this.ctrl = ctrl;
 
 		GereSouris gs = new GereSouris();
@@ -37,11 +40,26 @@ public class PanelPlateau extends JPanel
 				imgCase = new ImageIcon(this.ctrl.getImage(i, j));
 				imgCase.paintIcon(this, g, 10+(i*50), 10+(j*50));
 			}
+
+		g.setColor(Color.WHITE);
+		
+		if (this.ctrl.gameOver() == 2) // VICTOIRE
+		{
+			ImageIcon gifVictoire = new ImageIcon("./img/feu_dartifice.gif");
+			gifVictoire.paintIcon(this, g, (Controleur.TAILLE*51) / 2 - (gifVictoire.getIconWidth() / 2) + 5, (Controleur.TAILLE*51) / 2 - (gifVictoire.getIconHeight() / 2));
+		}
+
+		if (this.ctrl.gameOver() == 1) // DEFAITE
+		{
+			ImageIcon gifDefaite = new ImageIcon("./img/explosion2.gif");
+			gifDefaite.paintIcon(this, g, (this.posCase[0])*50 - (gifDefaite.getIconWidth()/2 - 40), (this.posCase[1])*50 - (gifDefaite.getIconHeight()/2 - 25));
+		}
 	}
 
 	public class GereSouris extends MouseAdapter
 	{
 		private Rectangle[][] ensHitbox;
+		private boolean mouseClickedEnCours;
 
 		public GereSouris()
 		{
@@ -54,6 +72,8 @@ public class PanelPlateau extends JPanel
 
 		public void mouseClicked(MouseEvent e)
 		{
+			this.mouseClickedEnCours = true;
+
 			int posX = e.getX();
 			int posY = e.getY();
 
@@ -61,6 +81,8 @@ public class PanelPlateau extends JPanel
 
 			if (posCase != null)
 			{
+				PanelPlateau.this.posCase = posCase;
+
 				if (e.getButton() == MouseEvent.BUTTON1)
 					PanelPlateau.this.ctrl.retourner(posCase[0], posCase[1]);
 				if (e.getButton() == MouseEvent.BUTTON3)
@@ -68,21 +90,26 @@ public class PanelPlateau extends JPanel
 			}
 
 			PanelPlateau.this.repaint();
+
+			this.mouseClickedEnCours = false;
 		}
 
 		public void mouseMoved(MouseEvent e)
 		{
-			int posX = e.getX();
-			int posY = e.getY();
-
-			Integer[] posCase = this.getCoordCase(posX, posY);
-
-			if (posCase != null && !PanelPlateau.this.ctrl.gameOver())
-				PanelPlateau.this.setCursor(new Cursor(Cursor.HAND_CURSOR   ));
-			else
-				PanelPlateau.this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-
-			PanelPlateau.this.repaint();
+			if (!this.mouseClickedEnCours)
+			{
+				int posX = e.getX();
+				int posY = e.getY();
+	
+				Integer[] posCase = this.getCoordCase(posX, posY);
+	
+				if (posCase != null && PanelPlateau.this.ctrl.gameOver() == 0)
+					PanelPlateau.this.setCursor(new Cursor(Cursor.HAND_CURSOR   ));
+				else
+					PanelPlateau.this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	
+				PanelPlateau.this.repaint();
+			}
 		}
 
 		public Integer[] getCoordCase(int posX, int posY)

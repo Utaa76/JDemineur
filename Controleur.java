@@ -67,6 +67,11 @@ public class Controleur
 		this.metier.avertir(lig, col);
 	}
 
+	public int gameOver()
+	{
+		return this.metier.gameOver();
+	}
+
 	// VUE
 
 	public String getImage(int lig, int col)
@@ -76,11 +81,6 @@ public class Controleur
 		String urlImg = "./img/";
 
 		return strCase.equals(".") ? urlImg + "case.png" : urlImg + strCase + ".png";
-	}
-
-	public boolean gameOver()
-	{
-		return this.metier.gameOver() == 1;
 	}
 
 	public static void main(String[] a)

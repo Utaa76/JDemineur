@@ -89,17 +89,16 @@ public class Plateau
 		return bRet;
 	}
 
-	public int gameOver() // A CORRIGER --> LE CAS 2 NE FONCTIONNE PAS
+	public int gameOver()
 	{
-		int iRet = 0;
+		int iRet = 2; // PARTIE TERMINEE (cas par défaut)
 
 		for (Case[] tabCase : this.plateau)
 		{
 			for (Case c : tabCase)
 			{
 				if      ( c.estRetourne() &&  c.isBombe()) return 1; // LOSE
-				else if (!c.estRetourne() && !c.isBombe()) iRet = 2; // WIN          // A REVOIR
-				else                                       iRet = 0; // NOT FINISHED
+				else if (!c.estRetourne() && !c.isBombe()) iRet = 0; // PARTIE NON TERMINEE
 			}
 		}
 
