@@ -57,6 +57,12 @@ public class Controleur
 		} while (saisie != 'Q' || this.metier.gameOver() <= 0);*/
 	}
 
+	public void rejouer()
+	{
+		this.vue.dispose();
+		new Controleur();
+	}
+
 	public boolean retourner(int lig, int col)
 	{
 		return this.metier.retourner(lig, col);
@@ -81,6 +87,11 @@ public class Controleur
 		String urlImg = "./img/";
 
 		return strCase.equals(".") ? urlImg + "case.png" : urlImg + strCase + ".png";
+	}
+
+	public void quitter()
+	{
+		this.vue.dispose();
 	}
 
 	public static void main(String[] a)

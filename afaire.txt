@@ -1,4 +1,3 @@
-Popup victoire et défaite qui propose de rejouer ou fermer
 Afficher le nombre de bombes restantes
 Fenetre de départ pour régler la partie
 

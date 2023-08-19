@@ -11,7 +11,7 @@ public class Plateau
 		this.plateau = new Case[this.taille][this.taille];
 
 		this.initialiser();
-		this.placerBombes((int)(this.taille * this.taille * 0.15));
+		this.placerBombes((int)(this.taille * this.taille * 0.10));
 		this.setVoisins();
 		this.calculVal();
 	}
@@ -75,14 +75,14 @@ public class Plateau
 
 	public void avertir(int lig, int col)
 	{
-		if (lig < 0 || col < 0 || lig > this.taille || col > this.taille) return;
+		if (lig < 0 || col < 0 || lig > this.taille || col > this.taille || this.gameOver() != 0) return;
 
 		this.plateau[lig][col].avertir();
 	}
 
 	public boolean retourner(int lig, int col)
 	{
-		if (lig < 0 || col < 0 || lig > this.taille || col > this.taille || this.gameOver() == 1) return false;
+		if (lig < 0 || col < 0 || lig > this.taille || col > this.taille || this.gameOver() != 0) return false;
 
 		boolean bRet = this.plateau[lig][col].retourner();
 

@@ -1,6 +1,7 @@
 package jdemineur.vue;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import java.awt.Color;
@@ -19,8 +20,8 @@ public class PanelPlateau extends JPanel
 
 	public PanelPlateau(Controleur ctrl)
 	{
-		this.posCase =  null;
-		this.ctrl = ctrl;
+		this.posCase    =  null;
+		this.ctrl       = ctrl;
 
 		GereSouris gs = new GereSouris();
 
@@ -46,13 +47,19 @@ public class PanelPlateau extends JPanel
 		if (this.ctrl.gameOver() == 2) // VICTOIRE
 		{
 			ImageIcon gifVictoire = new ImageIcon("./img/feu_dartifice.gif");
-			gifVictoire.paintIcon(this, g, (Controleur.TAILLE*51) / 2 - (gifVictoire.getIconWidth() / 2) + 5, (Controleur.TAILLE*51) / 2 - (gifVictoire.getIconHeight() / 2));
+			int x = (Controleur.TAILLE*51) / 2 - (gifVictoire.getIconWidth () / 2) + 5;
+			int y = (Controleur.TAILLE*51) / 2 - (gifVictoire.getIconHeight() / 2) + 5;
+			
+			gifVictoire.paintIcon(this, g, x, y);
 		}
 
 		if (this.ctrl.gameOver() == 1) // DEFAITE
 		{
 			ImageIcon gifDefaite = new ImageIcon("./img/explosion2.gif");
-			gifDefaite.paintIcon(this, g, (this.posCase[0])*50 - (gifDefaite.getIconWidth()/2 - 40), (this.posCase[1])*50 - (gifDefaite.getIconHeight()/2 - 25));
+			int x = (this.posCase[0]) * 50 - (gifDefaite.getIconWidth () / 2 - 40);
+			int y = (this.posCase[1]) * 50 - (gifDefaite.getIconHeight() / 2 - 25);
+			
+			gifDefaite.paintIcon(this, g, x, y);
 		}
 	}
 
@@ -88,8 +95,30 @@ public class PanelPlateau extends JPanel
 				if (e.getButton() == MouseEvent.BUTTON3)
 					PanelPlateau.this.ctrl.avertir  (posCase[0], posCase[1]);
 			}
-
+			
 			PanelPlateau.this.repaint();
+			
+			int etatPartie = PanelPlateau.this.ctrl.gameOver();
+			if (etatPartie != 0)
+			{
+				String resultat = etatPartie == 1 ? "Défaite. Vous avez perdu." : "Victoire. Vous avez gagné !";
+
+				Object[] options = {"Rejouer", "Quitter"};
+				int choix = JOptionPane.showOptionDialog
+				(
+					null,
+					resultat,
+					"Fin de partie",
+					JOptionPane.YES_NO_CANCEL_OPTION,
+					JOptionPane.INFORMATION_MESSAGE,
+					null,
+					options,
+					options[0]
+				);
+
+				if (choix == 0) PanelPlateau.this.ctrl.rejouer();
+				else            PanelPlateau.this.ctrl.quitter();
+			}
 
 			this.mouseClickedEnCours = false;
 		}
