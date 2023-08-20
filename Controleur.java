@@ -6,14 +6,15 @@ import iut.algo.Clavier;
 
 public class Controleur 
 {
-	public static final int TAILLE = 10;
+	public static int    TAILLE      = 10;
+	public static double BOMBE_RATIO = 0.10;
 
 	private Plateau      metier;
 	private FramePlateau vue;
 
 	public Controleur()
 	{
-		this.metier = new Plateau     (Controleur.TAILLE);
+		this.metier = new Plateau     (Controleur.TAILLE, Controleur.BOMBE_RATIO);
 		this.vue    = new FramePlateau(this);
 
 		/* VERSION CUI */
@@ -73,6 +74,11 @@ public class Controleur
 		this.metier.avertir(lig, col);
 	}
 
+	public int getNbDrapeauDispo()
+	{
+		return this.metier.getNbDrapeauDispo();
+	}
+
 	public int gameOver()
 	{
 		return this.metier.gameOver();
@@ -87,6 +93,11 @@ public class Controleur
 		String urlImg = "./img/";
 
 		return strCase.equals(".") ? urlImg + "case.png" : urlImg + strCase + ".png";
+	}
+
+	public void majIHM()
+	{
+		this.vue.majIHM();
 	}
 
 	public void quitter()

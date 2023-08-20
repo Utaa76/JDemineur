@@ -4,14 +4,16 @@ public class Plateau
 {
 	private int      taille;
 	private Case[][] plateau;
+	private int      nbBombes;
 
-	public Plateau(int taille)
+	public Plateau(int taille, double bombRatio)
 	{
-		this.taille  = taille;
-		this.plateau = new Case[this.taille][this.taille];
+		this.taille   = taille;
+		this.plateau  = new Case[this.taille][this.taille];
+		this.nbBombes = (int)(this.taille * this.taille * bombRatio);
 
 		this.initialiser();
-		this.placerBombes((int)(this.taille * this.taille * 0.10));
+		this.placerBombes(this.nbBombes);
 		this.setVoisins();
 		this.calculVal();
 	}
@@ -110,6 +112,21 @@ public class Plateau
 		return this.plateau[lig][col];
 	}
 
+	public int getNbDrapeauDispo()
+	{
+		int nbDrapeauDispo = this.nbBombes;
+
+		for (Case[] tabCase : this.plateau)
+		{
+			for (Case c : tabCase)
+			{
+				if (c.estAverti()) nbDrapeauDispo--;
+			}
+		}
+
+		return nbDrapeauDispo;
+	}
+
 	public String toString()
 	{
 		String sRet = "";
@@ -125,12 +142,5 @@ public class Plateau
 		}
 
 		return sRet;
-	}
-
-	public static void main(String[] a)
-	{
-		Plateau p = new Plateau(10);
-
-		System.out.println(p);
 	}
 }

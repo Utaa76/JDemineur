@@ -3,5 +3,6 @@
 
 ./vue/FramePlateau.java
 ./vue/PanelPlateau.java
+./vue/PanelInfo.java
 
 ./Controleur.java

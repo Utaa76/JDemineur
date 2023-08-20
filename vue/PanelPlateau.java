@@ -96,7 +96,7 @@ public class PanelPlateau extends JPanel
 					PanelPlateau.this.ctrl.avertir  (posCase[0], posCase[1]);
 			}
 			
-			PanelPlateau.this.repaint();
+			PanelPlateau.this.ctrl.majIHM();
 			
 			int etatPartie = PanelPlateau.this.ctrl.gameOver();
 			if (etatPartie != 0)

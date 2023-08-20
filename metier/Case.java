@@ -47,6 +47,11 @@ public class Case
 		return this.estRetourne;
 	}
 
+	public boolean estAverti()
+	{
+		return this.estAverti;
+	}
+
 	public void calculVal()
 	{
 		for (Case c : this.alVoisins)
