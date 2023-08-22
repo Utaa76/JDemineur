@@ -1,5 +1,0 @@
-Fenetre de départ pour régler la partie
-
-Réglage :
-soit -> difficultés
-soit -> taille & nb de bombe

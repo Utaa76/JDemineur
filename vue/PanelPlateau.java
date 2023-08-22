@@ -35,8 +35,8 @@ public class PanelPlateau extends JPanel
 		
 		ImageIcon imgCase;
 
-		for (int i = 0 ; i < Controleur.TAILLE ; i++)
-			for (int j = 0 ; j < Controleur.TAILLE ; j++)
+		for (int i = 0 ; i < Controleur.LONGUEUR ; i++)
+			for (int j = 0 ; j < Controleur.HAUTEUR ; j++)
 			{
 				imgCase = new ImageIcon(this.ctrl.getImage(i, j));
 				imgCase.paintIcon(this, g, 10+(i*50), 10+(j*50));
@@ -47,8 +47,8 @@ public class PanelPlateau extends JPanel
 		if (this.ctrl.gameOver() == 2) // VICTOIRE
 		{
 			ImageIcon gifVictoire = new ImageIcon("./img/feu_dartifice.gif");
-			int x = (Controleur.TAILLE*51) / 2 - (gifVictoire.getIconWidth () / 2) + 5;
-			int y = (Controleur.TAILLE*51) / 2 - (gifVictoire.getIconHeight() / 2) + 5;
+			int x = (Controleur.LONGUEUR*51) / 2 - (gifVictoire.getIconWidth () / 2) + 5;
+			int y = (Controleur.HAUTEUR*51) / 2 - (gifVictoire.getIconHeight() / 2) + 5;
 			
 			gifVictoire.paintIcon(this, g, x, y);
 		}
@@ -70,10 +70,10 @@ public class PanelPlateau extends JPanel
 
 		public GereSouris()
 		{
-			this.ensHitbox = new Rectangle[Controleur.TAILLE][Controleur.TAILLE];
+			this.ensHitbox = new Rectangle[Controleur.LONGUEUR][Controleur.HAUTEUR];
 
-			for (int i = 0 ; i < Controleur.TAILLE ; i++)
-				for (int j = 0 ; j < Controleur.TAILLE ; j++)
+			for (int i = 0 ; i < Controleur.LONGUEUR ; i++)
+				for (int j = 0 ; j < Controleur.HAUTEUR ; j++)
 					this.ensHitbox[i][j] = new Rectangle(10+(i*50), 10+(j*50), 50, 50);
 		}
 
@@ -103,7 +103,7 @@ public class PanelPlateau extends JPanel
 			{
 				String resultat = etatPartie == 1 ? "Défaite. Vous avez perdu." : "Victoire. Vous avez gagné !";
 
-				Object[] options = {"Rejouer", "Quitter"};
+				Object[] options = {"Rejouer", "Reconfigurer", "Quitter"};
 				int choix = JOptionPane.showOptionDialog
 				(
 					null,
@@ -116,8 +116,16 @@ public class PanelPlateau extends JPanel
 					options[0]
 				);
 
-				if (choix == 0) PanelPlateau.this.ctrl.rejouer();
-				else            PanelPlateau.this.ctrl.quitter();
+				switch (choix)
+				{
+					case 0 -> PanelPlateau.this.ctrl.rejouer();
+					case 1 ->
+					{
+						PanelPlateau.this.ctrl.quitter();
+						new Controleur();
+					}
+					case 2 -> PanelPlateau.this.ctrl.quitter();
+				}
 			}
 
 			this.mouseClickedEnCours = false;
@@ -145,9 +153,9 @@ public class PanelPlateau extends JPanel
 		{
 			Integer[] posCase = new Integer[2];
 
-			for (int i = 0 ; i < Controleur.TAILLE ; i++)
+			for (int i = 0 ; i < Controleur.LONGUEUR ; i++)
 			{
-				for (int j = 0 ; j < Controleur.TAILLE ; j++)
+				for (int j = 0 ; j < Controleur.HAUTEUR ; j++)
 				{
 					if (this.ensHitbox[i][j].contains(posX, posY))
 					{

@@ -24,7 +24,7 @@ public class PanelInfo extends JPanel
 	{
 		super.paintComponent(g);
 
-		g.drawString((Controleur.TAILLE * Controleur.TAILLE) + " cases      " + (Controleur.BOMBE_RATIO * 100) + "% de bombes", 10, 20);
+		g.drawString((Controleur.HAUTEUR * Controleur.LONGUEUR) + " cases      " + (Controleur.BOMBE_RATIO * 100) + "% de bombes", 10, 20);
 
 		g.setFont(new Font("", Font.BOLD, 15));
 

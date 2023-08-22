@@ -12,8 +12,8 @@ public class FramePlateau extends JFrame
 
 	public FramePlateau(Controleur ctrl)
 	{
-		this.setTitle             ("JDémineur by Utaa");
-		this.setSize              (40 + Controleur.TAILLE*50, 80 + Controleur.TAILLE*50);
+		this.setTitle             ("JDemineur by Utaa (Jeu)");
+		this.setSize              (40 + Controleur.LONGUEUR*50, 80 + Controleur.HAUTEUR*50);
 		this.setLocationRelativeTo(null);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

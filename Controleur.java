@@ -6,62 +6,31 @@ import iut.algo.Clavier;
 
 public class Controleur 
 {
-	public static int    TAILLE      = 10;
+	public static int    HAUTEUR     = 10;
+	public static int    LONGUEUR    = 10;
 	public static double BOMBE_RATIO = 0.10;
 
 	private Plateau      metier;
 	private FramePlateau vue;
+	private FrameDebut   config;
 
 	public Controleur()
 	{
-		this.metier = new Plateau     (Controleur.TAILLE, Controleur.BOMBE_RATIO);
+		this.config = new FrameDebut(this);
+	}
+
+	public void initialiserJeu()
+	{
+		this.metier = new Plateau     (Controleur.HAUTEUR, Controleur.LONGUEUR, Controleur.BOMBE_RATIO);
 		this.vue    = new FramePlateau(this);
 
-		/* VERSION CUI */
-		
-		/* char   saisie;
-		String choix = "[A]vertir   une case\n" +
-		               "[R]etourner une case\n" +
-		               "[Q]uitter";
-
-		System.out.println(this.metier);
-
-		do
-		{
-			System.out.println(choix);
-			saisie = Clavier.lire_char();
-
-			if (saisie == 'R')
-			{
-				System.out.print("Quelle ligne ? ");
-				int lig = Clavier.lire_int();
-
-				System.out.print("Quelle colonne ? ");
-				int col = Clavier.lire_int();
-
-				this.retourner(lig,col);
-			}
-
-			if (saisie == 'A')
-			{
-				System.out.print("Quelle ligne ? ");
-				int lig = Clavier.lire_int();
-
-				System.out.print("Quelle colonne ? ");
-				int col = Clavier.lire_int();
-
-				this.avertir(lig,col);
-			}
-
-			System.out.println(this.metier);
-
-		} while (saisie != 'Q' || this.metier.gameOver() <= 0);*/
+		this.config.dispose();
 	}
 
 	public void rejouer()
 	{
 		this.vue.dispose();
-		new Controleur();
+		this.initialiserJeu();
 	}
 
 	public boolean retourner(int lig, int col)

@@ -4,5 +4,7 @@
 ./vue/FramePlateau.java
 ./vue/PanelPlateau.java
 ./vue/PanelInfo.java
+./vue/FrameDebut.java
+./vue/PanelDebut.java
 
 ./Controleur.java
