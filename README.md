@@ -2,7 +2,7 @@
 Réplique du fameux Démineur en Java.
 
 ## Pré-requis
-**Pour la compilation** Avoir installé le JDK et le JRE de Java disponible sur le site officiel Oracle.
+**Pour la compilation** Avoir installé le JDK et le JRE de Java disponible sur le site officiel Oracle.  
 **Pour l'exécution** Lancer le .JAR
 
 ## Installation
